@@ -1,4 +1,4 @@
-# CoderSchool Golang Course Prework Submission Template
+# CoderSchool Golang Week 1 Assigment
 
 1. **Submitted by: Nhan Tran (thien.nhan2310@gmail.com)**
 2. **Time spent: 3 hours**
