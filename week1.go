@@ -8,8 +8,11 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
 	"gopkg.in/yaml.v2"
 )
+
+const FILE_REDIRECT = "./redirect.yaml"
 
 type redirectItem struct {
 	key   string
@@ -82,7 +85,7 @@ func startServer(port int) {
 }
 
 func (list redirectList) append(item redirectItem) {
-	list[item.key] = item.value
+	list[item.key] = fmt.Sprintf("http://%v", item.value)
 	d, _ := yaml.Marshal(&list)
 	ioutil.WriteFile("redirect.yaml", d, 0644)
 }
@@ -90,7 +93,7 @@ func (list redirectList) append(item redirectItem) {
 func (list redirectList) remove(key string) {
 	delete(list, key)
 	d, _ := yaml.Marshal(&list)
-	ioutil.WriteFile("redirect.yaml", d, 0644)
+	ioutil.WriteFile(FILE_REDIRECT, d, 0644)
 }
 
 func (list redirectList) print() {
@@ -102,7 +105,7 @@ func (list redirectList) print() {
 }
 
 func getRedirectList() redirectList {
-	yamlFile, err := ioutil.ReadFile("redirect.yaml")
+	yamlFile, err := ioutil.ReadFile(FILE_REDIRECT)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}
